@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-import { UserRegistrationModel } from '../models/UserRegistrationModel';
-import {apiwrapper} from '../apis/apiwrapper';
-import { catchError, retry, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import {CacheService} from '../services/cache.service';
-import { LoginUserResponseModel } from '../models/LoginUserResponseModel';
-import { UserAppointmentsResponseModel } from '../models/UserAppointmentsResponseModel';
-import {getDateFromDDMMYYYY} from '../utiities/datetimeUtility';
+import {Injectable} from "@angular/core";
+import {apiwrapper} from "../apis/apiwrapper";
+import {map} from "rxjs/operators";
+import {CacheService} from "../services/cache.service";
+import {LoginUserResponseModel} from "../models/LoginUserResponseModel";
+import {getDateFromDDMMYYYY} from "../utiities/datetimeUtility";
 
 @Injectable()
-export class UserService {  
+export class UserService {
 
-  constructor(private apiwrapper:apiwrapper, private cacheService:CacheService) { 
+  constructor(private apiwrapper:apiwrapper, private cacheService:CacheService) {
 
-  }  
-  
+  }
+
   createUser(data){
     return this.apiwrapper.createUser(data);
   }
@@ -51,7 +48,7 @@ export class UserService {
         let hospitals = res.hospitals;
         hospitals.forEach(hospital => {
           hospital.appointments.forEach(appointment => {
-            appointment.dateOfAppointmentLong = getDateFromDDMMYYYY(appointment.dateOfAppointment);
+            appointment.dateOfAppointmentDate = getDateFromDDMMYYYY(appointment.dateOfAppointment);
           });
         });
         return hospitals;

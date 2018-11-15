@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {CacheService} from '../../services/cache.service';
-import {UserService} from '../../services/user.service';
-import { ErrorModel } from '../../models/ErrorModel';
-import { ErrorStatus } from '../../apis/apiErrorStatus';
-import { MatSnackBar } from '@angular/material';
-import {Router} from '@angular/router';
-import {getDateFromDDMMYYYY} from '../../utiities/datetimeUtility';
+import {Component, OnInit} from "@angular/core";
+import {PatientService} from "../../services/patient.service";
+import {UserService} from "../../services/user.service";
+import {ErrorModel} from "../../models/ErrorModel";
+import {ErrorStatus} from "../../apis/apiErrorStatus";
+import {MatSnackBar} from "@angular/material";
+import {Router} from "@angular/router";
+import {getDateFromDDMMYYYY} from "../../utiities/datetimeUtility";
 
 @Component({
   selector: 'app-settings',
@@ -20,11 +20,12 @@ export class SettingsComponent implements OnInit {
     username:'',
     email:''
   };
-  constructor(private router: Router, private snackbar:MatSnackBar, private cacheService:CacheService, private userService:UserService) { }
+  constructor(private router: Router, private snackbar:MatSnackBar,
+              private userService:UserService, private patientService:PatientService) { }
 
   ngOnInit() {
-    let user = this.cacheService.getCurrentUser();
-    this.userService.getUserDetails(user.id)
+    let user = this.userService.getUser();
+    this.patientService.getUserDetails(user.id)
     .subscribe(userDetails => {
       let userTemp:any = {};
       userTemp = userDetails;
@@ -48,7 +49,7 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  onSubmit(settingsData){    
+  onSubmit(settingsData){
     //console.log(data);
     //console.log(settingsData.value);
     if(!settingsData.valid){
@@ -60,9 +61,9 @@ export class SettingsComponent implements OnInit {
     let data = Object.assign({},settingsData.value);
     data.dateOfBirth =data.dateOfBirth.toLocaleDateString();
 
-    let user= this.cacheService.getCurrentUser();
+    let user= this.userService.getUser();
 
-    this.userService.updateUser(user.id, data)
+    this.patientService.updateUser(user.id, data)
     .subscribe(response => {
       this.router.navigate(['/main']);
     }, errorModel => {
@@ -72,7 +73,7 @@ export class SettingsComponent implements OnInit {
       if(errorModel.status == 404){
         this.snackbar.open('Not found', '', {duration:2000, panelClass:['red-snackbar']});
       }
-      
+
       //alert(error.message);
     }, () => {});
   }

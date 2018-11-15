@@ -1,17 +1,11 @@
-import { Injectable } from '@angular/core';
-import {apiwrapper} from '../apis/apiwrapper';
-import {CacheService} from '../services/cache.service';
-import {getDateFromDDMMYYYY} from '../utiities/datetimeUtility';
-import { catchError, retry, map } from 'rxjs/operators';
+import {Injectable} from "@angular/core";
+import {apiwrapper} from "../apis/apiwrapper";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class AppointmentsService {
 
-  constructor(private apiwrapper:apiwrapper, private cacheService:CacheService) { }
-
-  getAppointmentsForUser(userId){
-
-  }
+  constructor(private apiwrapper:apiwrapper) { }
 
   //only for POC
   createAppointment(userId){

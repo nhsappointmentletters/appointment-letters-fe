@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material';
+import {Component, OnInit} from "@angular/core";
+import {PatientService} from "../../services/patient.service";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private router: Router, private userService:UserService, private snackbar : MatSnackBar) { 
+  constructor(private router: Router, private patientService:PatientService, private snackbar : MatSnackBar) {
 
   }
   displaySuccess = false;
@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(registrationData){    
+  onSubmit(registrationData){
     //console.log(data);
     //console.log(registrationData.value);
     if(!registrationData.valid){
@@ -39,7 +39,7 @@ export class RegistrationComponent implements OnInit {
     let data = Object.assign({},registrationData.value);
     data.dateOfBirth =data.dateOfBirth.toLocaleDateString();
 
-    this.userService.createUser(data)
+    this.patientService.createUser(data)
     .subscribe(response => {
       this.displaySuccess = true;
     }, errorModel => {

@@ -1,69 +1,38 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class CacheService {
-  private UserKey = "user";
-  private AuthenticationTokenKey = "authenticationToken";
-  private IsUserLoggedOnKey="isUserLoggedOn";
-  private TimeToLiveKey = "timeToLive";
-  private IdKey = "id";
-  private UsernameKey = "username";
-  private PasswordKey = "password";
-
-  // private static _currentUser = {
-  //   id:2,
-  //   username:'',
-  //   password:''
-  // };
-  // private static _authenticationToken = '';
-  //private static _isUserLoggedOn = false;
-  // private static _timeToLive = 3600;
+  private static TOKEN_KEY = "authenticationToken";
 
   constructor() { }
 
-  isUserLoggedOn(){
-    let jsonString = sessionStorage.getItem(this.UserKey);
-    let user = JSON.parse(jsonString);
-    if(!user)
-    {
-      return false;
-    }
-    return user.isUserLoggedOn;
+  clear() {
+    sessionStorage.clear();
   }
 
-  clearCache(){
+  setToken(token, id, username){
     let user = {
-      isUserLoggedOn:false,
-      authenticationToken:'',
-      timeToLive:0,
-      id:0,
-      username:'',
-      password:''
-    }
-    sessionStorage.setItem(this.UserKey, JSON.stringify(user));
-  }
-
-  setup(isValid, token, timeToLive, id, username, password){
-    let user = {
-      isUserLoggedOn:isValid,
       authenticationToken:token,
-      timeToLive:timeToLive,
       id:id,
-      username:username,
-      password:password
+      username:username
     }
-    sessionStorage.setItem(this.UserKey, JSON.stringify(user));
+    sessionStorage.setItem(CacheService.TOKEN_KEY, JSON.stringify(user));
   }
 
-  getCurrentUser(){
-    let jsonString = sessionStorage.getItem(this.UserKey);
-    let user = JSON.parse(jsonString);
-    return user;
-  }
-
-  getAuthenticationToken(){
-    let jsonString = sessionStorage.getItem(this.UserKey);
+  getToken(){
+    let jsonString = sessionStorage.getItem(CacheService.TOKEN_KEY);
     let user = JSON.parse(jsonString);
     return user.authenticationToken;
   }
+  getUser(){
+    let jsonString = sessionStorage.getItem(CacheService.TOKEN_KEY);
+    let user = JSON.parse(jsonString);
+    if(user) {
+      return user;
+    }
+    else {
+      return null;
+    }
+  }
+
 }

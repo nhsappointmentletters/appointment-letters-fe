@@ -10,11 +10,11 @@ import { UserAppointmentsResponseModel } from '../models/UserAppointmentsRespons
 import { UserHospitalsModel } from '../models/UserHospitalsModel';
 
 @Injectable()
-export class apiwrapper{    
-    
+export class apiwrapper{
+
     constructor(private cacheService:CacheService, private http:HttpClient) {
-        
-    }    
+
+    }
 
     // This is for registration / create account
     // data : {firstName:'', lastName:'', dateOfBirth:'dd/MM/yyyy',email:'',username:'',password:''}
@@ -37,7 +37,7 @@ export class apiwrapper{
             catchError(this.handleError)
         );
     }
-    
+
     // This is for login user
     // data : {username:'', password:''}
     // response : token
@@ -84,7 +84,7 @@ export class apiwrapper{
     getUserHospitals(userId){
         let url = apiconfig.userHospitalsGetUrl.replace(/{userId}/g,userId);
         console.log('Get user appointments url ' + url);
-        let authenticationToken = this.cacheService.getAuthenticationToken();
+        let authenticationToken = this.cacheService.getToken();
     }
 
     //post to create appointments for the userid - only for POC
@@ -102,7 +102,7 @@ export class apiwrapper{
     getAppointmentsForUserId(userId){
         let url = apiconfig.userAppointmentsGetUrl.replace(/{userId}/g,userId);
         console.log('Get user appointments url ' + url);
-        let authenticationToken = this.cacheService.getAuthenticationToken();
+        let authenticationToken = this.cacheService.getToken();
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json',
@@ -119,7 +119,7 @@ export class apiwrapper{
     deleteAllAppointmentsForUserId(userId){
         let url = apiconfig.userAppointmentsDeleteUrl.replace(/{userId}/g,userId);
         console.log('Delete user appointments url ' + url);
-        let authenticationToken = this.cacheService.getAuthenticationToken();
+        let authenticationToken = this.cacheService.getToken();
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json',
@@ -161,7 +161,7 @@ export class apiwrapper{
     }
 
     private getHeaderOptions() {
-        let authenticationToken = this.cacheService.getAuthenticationToken();
+        let authenticationToken = this.cacheService.getToken();
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json',

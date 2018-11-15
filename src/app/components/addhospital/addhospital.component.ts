@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {MatSnackBar} from '@angular/material';
-import {UserService} from '../../services/user.service';
-import {CacheService} from '../../services/cache.service';
-import {Router} from '@angular/router';
-import {ErrorStatus} from '../../apis/apiErrorStatus';
+import {Component, OnInit} from "@angular/core";
+import {MatSnackBar} from "@angular/material";
+import {UserService} from "../../services/user.service";
+import {PatientService} from "../../services/patient.service";
+import {Router} from "@angular/router";
+import {ErrorStatus} from "../../apis/apiErrorStatus";
 
 @Component({
   selector: 'app-addhospital',
@@ -12,7 +12,8 @@ import {ErrorStatus} from '../../apis/apiErrorStatus';
 })
 export class AddhospitalComponent implements OnInit {
 
-  constructor(private router:Router, private snackbar:MatSnackBar, private userService:UserService, private cacheService:CacheService) { }
+  constructor(private router:Router, private snackbar:MatSnackBar, private patientService:PatientService,
+              private userService:UserService) { }
 
   ngOnInit() {
   }
@@ -30,9 +31,9 @@ export class AddhospitalComponent implements OnInit {
       hospitalName:addhospitalform.value.name
     };
 
-    let user = this.cacheService.getCurrentUser();
+    let user = this.userService.getUser();
 
-    this.userService.addHospital(user.id, data)
+    this.patientService.addHospital(user.id, data)
     .subscribe(response => {
       this.router.navigate(['/main']);
     }, errorModel => {

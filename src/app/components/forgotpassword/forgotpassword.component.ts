@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {MatSnackBar} from '@angular/material';
+import {Component, OnInit} from "@angular/core";
+import {PatientService} from "../../services/patient.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-forgotpassword',
@@ -10,8 +10,8 @@ import {MatSnackBar} from '@angular/material';
 export class ForgotpasswordComponent implements OnInit {
   displaySuccess = false;
   disableButton = false;
-  constructor(private userService:UserService, private snackBar:MatSnackBar) { }
-  
+  constructor(private patientService:PatientService, private snackBar:MatSnackBar) { }
+
   ngOnInit() {
   }
 
@@ -23,7 +23,7 @@ export class ForgotpasswordComponent implements OnInit {
       return;
     }
     this.disableButton = true;
-    this.userService.resetpassword(forgotpasswordform.value.username)
+    this.patientService.resetpassword(forgotpasswordform.value.username)
     .subscribe(response =>{
       this.displaySuccess=true;
     }, error => {

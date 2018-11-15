@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {CacheService} from '../../services/cache.service';
-import {UserService} from '../../services/user.service';
-import { UserAppointmentsResponseModel } from '../../models/UserAppointmentsResponseModel';
-import { UserHospitalsModel } from '../../models/UserHospitalsModel';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {MatSnackBar} from '@angular/material';
-import {Router} from '@angular/router';
-import {ErrorStatus} from '../../apis/apiErrorStatus';
-import {concatMap} from 'rxjs/operators';
-import {AppointmentsService} from '../../services/appointments.service';
-import { AppointmentModel } from '../../models/AppointmentModel';
+import {Component, OnInit} from "@angular/core";
+import {PatientService} from "../../services/patient.service";
+import {UserService} from "../../services/user.service";
+import {UserHospitalsModel} from "../../models/UserHospitalsModel";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {MatSnackBar} from "@angular/material";
+import {Router} from "@angular/router";
+import {concatMap} from "rxjs/operators";
+import {AppointmentsService} from "../../services/appointments.service";
+import {AppointmentModel} from "../../models/AppointmentModel";
 
 @Component({
   selector: 'app-main',
@@ -18,7 +16,7 @@ import { AppointmentModel } from '../../models/AppointmentModel';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private cacheService:CacheService, private userService:UserService, private modalService: NgbModal, private snackbar:MatSnackBar, private router:Router, private appointmentsService:AppointmentsService) { }
+  constructor(private userService:UserService, private patientService:PatientService, private modalService: NgbModal, private snackbar:MatSnackBar, private router:Router, private appointmentsService:AppointmentsService) { }
   username='test';
   fetching=false;
   isNavbarCollapsed=true;
@@ -30,10 +28,10 @@ export class MainComponent implements OnInit {
   }
 
   getUserHospitalAppointments(){
-    let user = this.cacheService.getCurrentUser();
+    let user = this.userService.getUser();
     this.username = user.username;
     this.fetching = true;
-    this.userService.getAppointmentsForUserId(user.id)
+    this.patientService.getAppointmentsForUserId(user.id)
     .subscribe(
       userHospitalAppointments =>{
         this.userHospitalAppointments = userHospitalAppointments;
@@ -67,9 +65,9 @@ export class MainComponent implements OnInit {
       hospitalName:addhospitalform.value.name
     };
 
-    let user = this.cacheService.getCurrentUser();
+    let user = this.userService.getUser();
 
-    this.userService.addHospital(user.id, data)
+    this.patientService.addHospital(user.id, data)
     .pipe(concatMap(response => this.appointmentsService.createAppointment(user.id)))
     .subscribe(response => {
       this.getUserHospitalAppointments();
@@ -81,13 +79,12 @@ export class MainComponent implements OnInit {
   }
 
   logout(){
-    console.log('calling logout');
-    this.cacheService.clearCache();
+    this.userService.logout();
     this.router.navigate(['/login']);
   }
 
   deleteAllAppointments(){
-    let user = this.cacheService.getCurrentUser();
+    let user = this.userService.getUser();
     this.fetching = true;
     this.appointmentsService.deleteAllAppointmentsForUserId(user.id)
     .subscribe(response => {

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material';
-import { ErrorStatus } from '../../apis/apiErrorStatus';
+import {Component, OnInit} from "@angular/core";
+import {PatientService} from "../../services/patient.service";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material";
+import {ErrorStatus} from "../../apis/apiErrorStatus";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ import { ErrorStatus } from '../../apis/apiErrorStatus';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private userService:UserService, private snackbar:MatSnackBar) { }
+  constructor(private router: Router, private patientService:PatientService, private snackbar:MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.userService.loginUser(loginForm.value)
+    this.patientService.loginUser(loginForm.value)
     .subscribe(response => {
       this.router.navigate(['/main']);
     }, errorModel => {

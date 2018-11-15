@@ -9,8 +9,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {apiwrapper} from "./apis/apiwrapper";
 import {AuthGuardService} from "./services/authguard.service";
-import {UserService} from "./services/user.service";
+import {PatientService} from "./services/patient.service";
 import {CacheService} from "./services/cache.service";
+import {UserService} from "./services/user.service";
 import {AppointmentsService} from "./services/appointments.service";
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./components/login/login.component";
@@ -61,7 +62,7 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     AngularFontAwesomeModule
   ],
-  providers: [AuthGuardService, UserService, CacheService, AppointmentsService, apiwrapper,
+  providers: [AuthGuardService, UserService, PatientService, CacheService, AppointmentsService, apiwrapper,
     {provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
   bootstrap: [AppComponent]
 })

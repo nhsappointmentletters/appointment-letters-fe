@@ -24,6 +24,7 @@ export class MainComponent implements OnInit {
   isNavbarCollapsed=true;
   userHospitalAppointments:UserHospitalsModel[];
   closeResult: string;
+
   ngOnInit() {
     this.getUserHospitalAppointments();
   }
@@ -49,7 +50,7 @@ export class MainComponent implements OnInit {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.onAddHospital(result);
     }, (reason) => {
-      
+
     });
   }
 
@@ -66,7 +67,7 @@ export class MainComponent implements OnInit {
       hospitalName:addhospitalform.value.name
     };
 
-    let user = this.cacheService.getCurrentUser();    
+    let user = this.cacheService.getCurrentUser();
 
     this.userService.addHospital(user.id, data)
     .pipe(concatMap(response => this.appointmentsService.createAppointment(user.id)))
@@ -87,7 +88,7 @@ export class MainComponent implements OnInit {
 
   deleteAllAppointments(){
     let user = this.cacheService.getCurrentUser();
-    this.fetching = true;    
+    this.fetching = true;
     this.appointmentsService.deleteAllAppointmentsForUserId(user.id)
     .subscribe(response => {
         this.getUserHospitalAppointments();
@@ -100,9 +101,17 @@ export class MainComponent implements OnInit {
   }
 
   print(appointment:AppointmentModel){
+
+    var width = 800;
+    var height = 800;
+    var left = (window.screen.width/2)-(width/2);
+    var top = (window.screen.height/2)-(height/2);
+
     let printContents, popupWin;
     printContents = this.appointmentMockData(appointment);//document.getElementById('print-section').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=auto,width=auto');
+    // popupWin = window.open('', '_blank', 'top=0,left=0,height=2000,width=2000');
+    popupWin = window.open('', '_blank', 'width=' + width + ', height=' + height
+      + ', left=' + left + ', top=' + top)
     popupWin.document.open();
     popupWin.document.write(`
       <html>
@@ -135,7 +144,7 @@ export class MainComponent implements OnInit {
     Fax:(01254)689 179
     </address>
   </aside>
-    <br/><br/><br/><br/><br/><br/><br/><br/>` + 
+    <br/><br/><br/><br/><br/><br/><br/><br/>` +
     new Date().toDateString() + `<br/><br/>
     <h4>Counselling appointment</h4>
     <h5>` + appointment.dateOfAppointment + `</h5><br/>

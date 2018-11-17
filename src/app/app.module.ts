@@ -8,11 +8,10 @@ import {MatDatepickerModule, MatNativeDateModule, MatSnackBarModule, MAT_DATE_LO
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {apiwrapper} from "./apis/apiwrapper";
-import {AuthGuardService} from "./services/authguard.service";
 import {PatientService} from "./services/patient.service";
 import {CacheService} from "./services/cache.service";
-import {UserService} from "./services/user.service";
 import {AppointmentsService} from "./services/appointments.service";
+import {SignInRouterService} from "./services/sign-in-router.service";
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegistrationComponent} from "./components/registration/registration.component";
@@ -22,15 +21,18 @@ import {SettingsComponent} from "./components/settings/settings.component";
 import {ValidateEqualDirective} from "./directives/validate-equal.directive";
 import {AddhospitalComponent} from "./components/addhospital/addhospital.component";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {AuthenticationService} from "./services/authentication.service";
+import {SignInGuard} from "./routing/signin.guard";
+import {AuthenticationGuard} from "./routing/authentication.guard";
 
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate:[SignInGuard]},
   { path: 'registration', component: RegistrationComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
-  { path: 'main', component: MainComponent, canActivate:[AuthGuardService] },
-  { path:'addhospital', component:AddhospitalComponent, canActivate:[AuthGuardService] },
-  { path:'settings', component:SettingsComponent, canActivate:[AuthGuardService] },
+  { path: 'main', component: MainComponent, canActivate:[AuthenticationGuard] },
+  { path:'addhospital', component:AddhospitalComponent, canActivate:[AuthenticationGuard] },
+  { path:'settings', component:SettingsComponent, canActivate:[AuthenticationGuard] },
   { path: '', redirectTo: '/main', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
 ];
@@ -62,8 +64,9 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     AngularFontAwesomeModule
   ],
-  providers: [AuthGuardService, UserService, PatientService, CacheService, AppointmentsService, apiwrapper,
-    {provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
+  providers: [SignInRouterService, AuthenticationService, PatientService,
+              CacheService, AppointmentsService, apiwrapper,
+              AuthenticationGuard, SignInGuard, {provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

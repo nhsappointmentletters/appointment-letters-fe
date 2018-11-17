@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {CacheService} from "../services/cache.service";
 
 @Injectable()
-export class UserService {
+export class AuthenticationService {
 
   constructor(private cacheService: CacheService) { }
 
@@ -15,7 +15,6 @@ export class UserService {
   }
 
   logout(){
-    console.log('calling logout');
     this.cacheService.clear();
   }
 }

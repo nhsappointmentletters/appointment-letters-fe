@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {PatientService} from "../../services/patient.service";
-import {UserService} from "../../services/user.service";
+import {AuthenticationService} from "../../services/authentication.service";
 import {ErrorModel} from "../../models/ErrorModel";
 import {ErrorStatus} from "../../apis/apiErrorStatus";
 import {MatSnackBar} from "@angular/material";
@@ -21,10 +21,10 @@ export class SettingsComponent implements OnInit {
     email:''
   };
   constructor(private router: Router, private snackbar:MatSnackBar,
-              private userService:UserService, private patientService:PatientService) { }
+              private authenticationService:AuthenticationService, private patientService:PatientService) { }
 
   ngOnInit() {
-    let user = this.userService.getUser();
+    let user = this.authenticationService.getUser();
     this.patientService.getUserDetails(user.id)
     .subscribe(userDetails => {
       let userTemp:any = {};
@@ -61,7 +61,7 @@ export class SettingsComponent implements OnInit {
     let data = Object.assign({},settingsData.value);
     data.dateOfBirth =data.dateOfBirth.toLocaleDateString();
 
-    let user= this.userService.getUser();
+    let user= this.authenticationService.getUser();
 
     this.patientService.updateUser(user.id, data)
     .subscribe(response => {

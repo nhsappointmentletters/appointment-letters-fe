@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {PatientService} from "../../services/patient.service";
-import {UserService} from "../../services/user.service";
+import {AuthenticationService} from "../../services/authentication.service";
 import {UserHospitalsModel} from "../../models/UserHospitalsModel";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {MatSnackBar} from "@angular/material";
@@ -16,7 +16,7 @@ import {AppointmentModel} from "../../models/AppointmentModel";
 })
 export class MainComponent implements OnInit {
 
-  constructor(private userService:UserService, private patientService:PatientService, private modalService: NgbModal, private snackbar:MatSnackBar, private router:Router, private appointmentsService:AppointmentsService) { }
+  constructor(private authenticationService:AuthenticationService, private patientService:PatientService, private modalService: NgbModal, private snackbar:MatSnackBar, private router:Router, private appointmentsService:AppointmentsService) { }
   username='test';
   fetching=false;
   isNavbarCollapsed=true;
@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
   }
 
   getUserHospitalAppointments(){
-    let user = this.userService.getUser();
+    let user = this.authenticationService.getUser();
     this.username = user.username;
     this.fetching = true;
     this.patientService.getAppointmentsForUserId(user.id)
@@ -65,7 +65,7 @@ export class MainComponent implements OnInit {
       hospitalName:addhospitalform.value.name
     };
 
-    let user = this.userService.getUser();
+    let user = this.authenticationService.getUser();
 
     this.patientService.addHospital(user.id, data)
     .pipe(concatMap(response => this.appointmentsService.createAppointment(user.id)))
@@ -79,12 +79,12 @@ export class MainComponent implements OnInit {
   }
 
   logout(){
-    this.userService.logout();
+    this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 
   deleteAllAppointments(){
-    let user = this.userService.getUser();
+    let user = this.authenticationService.getUser();
     this.fetching = true;
     this.appointmentsService.deleteAllAppointmentsForUserId(user.id)
     .subscribe(response => {

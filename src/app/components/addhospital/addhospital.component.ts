@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {MatSnackBar} from "@angular/material";
-import {UserService} from "../../services/user.service";
+import {AuthenticationService} from "../../services/authentication.service";
 import {PatientService} from "../../services/patient.service";
 import {Router} from "@angular/router";
 import {ErrorStatus} from "../../apis/apiErrorStatus";
@@ -12,8 +12,9 @@ import {ErrorStatus} from "../../apis/apiErrorStatus";
 })
 export class AddhospitalComponent implements OnInit {
 
-  constructor(private router:Router, private snackbar:MatSnackBar, private patientService:PatientService,
-              private userService:UserService) { }
+  constructor(private router:Router, private snackbar:MatSnackBar,
+              private patientService:PatientService,
+              private authenticationService:AuthenticationService) { }
 
   ngOnInit() {
   }
@@ -31,7 +32,7 @@ export class AddhospitalComponent implements OnInit {
       hospitalName:addhospitalform.value.name
     };
 
-    let user = this.userService.getUser();
+    let user = this.authenticationService.getUser();
 
     this.patientService.addHospital(user.id, data)
     .subscribe(response => {

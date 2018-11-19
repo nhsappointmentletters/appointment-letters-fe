@@ -62,6 +62,7 @@
                         <div class="card-header">{{appointment.dateOfAppointment}}</div>
                         <div class="card-body text-dark">
                           <h6 class="card-title">{{appointment.dateOfAppointmentDate |date: 'E'}} {{appointment.timeOfAppointment}}</h6>
+                          <button class="btn btn-outline-dark" (click)="downloadFile()"><i class="fa fa-download"></i> download</button>
                           <button class="btn btn-outline-dark" (click)="print(appointment)">print <i class="fa fa-print"></i></button>
                         </div>
                       </div>

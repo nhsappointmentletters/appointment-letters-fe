@@ -8,6 +8,8 @@ import {Router} from "@angular/router";
 import {concatMap} from "rxjs/operators";
 import {AppointmentsService} from "../../services/appointments.service";
 import {AppointmentModel} from "../../models/AppointmentModel";
+import { Http, ResponseContentType } from '@angular/http';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-main',
@@ -97,6 +99,10 @@ export class MainComponent implements OnInit {
       () => {});
   }
 
+  downloadFile() {
+    this.appointmentsService.downloadFile();
+  }
+
   print(appointment:AppointmentModel){
 
     var width = 800;
@@ -128,6 +134,8 @@ export class MainComponent implements OnInit {
     popupWin.document.close();
     return true;
   }
+
+
 
   appointmentMockData(appointment:AppointmentModel){
     return `<aside>

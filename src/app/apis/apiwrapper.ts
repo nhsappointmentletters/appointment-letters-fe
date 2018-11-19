@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, retry, map } from 'rxjs/operators';
-import * as apiconfig from './apiconfig';
-import {ErrorModel} from '../models/ErrorModel';
-import {CacheService} from '../services/cache.service';
-import {LoginUserResponseModel} from '../models/LoginUserResponseModel';
-import { UserAppointmentsResponseModel } from '../models/UserAppointmentsResponseModel';
-import { UserHospitalsModel } from '../models/UserHospitalsModel';
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {throwError, Observable} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import "rxjs/add/operator/map";
+import * as apiconfig from "./apiconfig";
+import {ErrorModel} from "../models/ErrorModel";
+import {CacheService} from "../services/cache.service";
+import {LoginUserResponseModel} from "../models/LoginUserResponseModel";
+import {UserAppointmentsResponseModel} from "../models/UserAppointmentsResponseModel";
+import {saveAs} from "file-saver";
 
 @Injectable()
 export class apiwrapper{
@@ -116,6 +117,32 @@ export class apiwrapper{
         );
     }
 
+    downloadFile() {
+      let authenticationToken = this.cacheService.getToken();
+      var action$ = this.getFile(apiconfig.downloadGetUrl, authenticationToken)
+        .subscribe(responseBlob  => {
+        saveAs(responseBlob, 'appointment-letter.docx');
+      });
+    }
+    getFile(fileUrl: string, authenticationToken : string): Observable<Blob> {
+      return this.http.get(fileUrl, {
+                                        responseType: 'blob',
+                                        'headers': new HttpHeaders({
+                                          'accept': 'application/octet-stream',
+                                          'Authorization': 'Bearer ' + authenticationToken
+                                        })
+                                      }
+      );
+    }
+
+  private saveToFileSystem(responseBlob) {
+    const contentDispositionHeader: string = responseBlob.headers.get('Content-Disposition');
+    const parts: string[] = contentDispositionHeader.split(';');
+    const filename = parts[1].split('=')[1];
+    const blob = new Blob([this.base64toBlob(response)]);
+    saveAs(blob, filename);
+  }
+
     deleteAllAppointmentsForUserId(userId){
         let url = apiconfig.userAppointmentsDeleteUrl.replace(/{userId}/g,userId);
         console.log('Delete user appointments url ' + url);
@@ -123,7 +150,6 @@ export class apiwrapper{
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json',
-            // "Content-Type": "application/x-www-form-urlencoded",
               'Authorization': 'Bearer ' + authenticationToken
             })
           };

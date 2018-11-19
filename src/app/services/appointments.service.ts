@@ -12,6 +12,11 @@ export class AppointmentsService {
     return this.apiwrapper.createAppointments(userId);
   }
 
+  downloadFile() {
+    console.log("from AppointmentsService.downloadFile");
+    this.apiwrapper.downloadFile();
+  }
+
   //only for POC
   deleteAllAppointmentsForUserId(userId){
     return this.apiwrapper.deleteAllAppointmentsForUserId(userId).pipe(

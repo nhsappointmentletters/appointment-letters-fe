@@ -9,3 +9,4 @@ export const userAppointmentsDeleteUrl = baseUrl + "/user/{userId}/appointments"
 export const userHospitalsGetUrl = baseUrl + "/user/{userId}/hospitals";
 export const addHospitalToUserUrl = baseUrl + "/user/{userId}/hospital";
 export const createUserAppointmentsPostUrl = baseUrl+"/user/{userId}/appointments";
+export const downloadGetUrl = baseUrl+"/download";

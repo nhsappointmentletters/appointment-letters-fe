@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {throwError, Observable} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import "rxjs/add/operator/map";
@@ -120,13 +120,14 @@ export class apiwrapper{
     downloadFile() {
       let authenticationToken = this.cacheService.getToken();
       var action$ = this.getFile(apiconfig.downloadGetUrl, authenticationToken)
-        .subscribe(responseBlob  => {
-        saveAs(responseBlob, 'appointment-letter.docx');
+        .subscribe(httpResponse  => {
+          this.saveToFileSystem(httpResponse);
       });
     }
-    getFile(fileUrl: string, authenticationToken : string): Observable<Blob> {
+    getFile(fileUrl: string, authenticationToken : string): Observable<HttpResponse<Blob>> {
       return this.http.get(fileUrl, {
                                         responseType: 'blob',
+                                        observe: 'response',
                                         'headers': new HttpHeaders({
                                           'accept': 'application/octet-stream',
                                           'Authorization': 'Bearer ' + authenticationToken
@@ -135,12 +136,11 @@ export class apiwrapper{
       );
     }
 
-  private saveToFileSystem(responseBlob) {
-    const contentDispositionHeader: string = responseBlob.headers.get('Content-Disposition');
+  private saveToFileSystem(httpResponse) {
+    const contentDispositionHeader: string = httpResponse.headers.get('Content-Disposition');
     const parts: string[] = contentDispositionHeader.split(';');
     const filename = parts[1].split('=')[1];
-    const blob = new Blob([this.base64toBlob(response)]);
-    saveAs(blob, filename);
+    saveAs(httpResponse.body, filename);
   }
 
     deleteAllAppointmentsForUserId(userId){

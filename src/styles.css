@@ -2,11 +2,12 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~material-icons/iconfont/material-icons.css';
 
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */
 }
-  
+
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
 }
@@ -62,14 +63,14 @@
   flex-wrap: nowrap; /* [1] */
   overflow-x: auto; /* [1] */
   -webkit-overflow-scrolling: touch; /* [4] */
-  -ms-overflow-style: -ms-autohiding-scrollbar; /* [5] */ 
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* [5] */
 }
 
 /* [6] */
 .scroll::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 .item {
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
 }

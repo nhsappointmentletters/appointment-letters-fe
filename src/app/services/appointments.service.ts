@@ -12,9 +12,9 @@ export class AppointmentsService {
     return this.apiwrapper.createAppointments(userId);
   }
 
-  downloadFile() {
+  downloadFile(id) {
     console.log("from AppointmentsService.downloadFile");
-    this.apiwrapper.downloadFile();
+    this.apiwrapper.downloadFile(id);
   }
 
   //only for POC

@@ -24,6 +24,7 @@ import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {AuthenticationService} from "./services/authentication.service";
 import {SignInGuard} from "./routing/signin.guard";
 import {AuthenticationGuard} from "./routing/authentication.guard";
+import { MatIconModule } from "@angular/material/icon";
 
 
 const appRoutes: Routes = [
@@ -62,7 +63,8 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     FormsModule,
     NgbModule.forRoot(),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    MatIconModule
   ],
   providers: [SignInRouterService, AuthenticationService, PatientService,
               CacheService, AppointmentsService, apiwrapper,

@@ -117,9 +117,10 @@ export class apiwrapper{
         );
     }
 
-    downloadFile() {
+    downloadFile(id) {
       let authenticationToken = this.cacheService.getToken();
-      var action$ = this.getFile(apiconfig.downloadGetUrl, authenticationToken)
+      let url = apiconfig.downloadGetUrl.replace(/{appointmentId}/g,id);
+      var action$ = this.getFile(url, authenticationToken)
         .subscribe(httpResponse  => {
           this.saveToFileSystem(httpResponse);
       });

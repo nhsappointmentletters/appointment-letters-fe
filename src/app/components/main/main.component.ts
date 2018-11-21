@@ -99,8 +99,8 @@ export class MainComponent implements OnInit {
       () => {});
   }
 
-  downloadFile() {
-    this.appointmentsService.downloadFile();
+  downloadFile(id) {
+    this.appointmentsService.downloadFile(id);
   }
 
   print(appointment:AppointmentModel){
@@ -138,31 +138,29 @@ export class MainComponent implements OnInit {
 
 
   appointmentMockData(appointment:AppointmentModel){
-    return `<aside>
-    <address class=from>
-    Lancashire Care NHS
-    St Ives House
-    Accrington Road
-    Blackburn
-    BB1 2EG
-    Tel:(01254)226840
-    Fax:(01254)689 179
-    </address>
-  </aside>
-    <br/><br/><br/><br/><br/><br/><br/><br/>` +
-    new Date().toDateString() + `<br/><br/>
-    <h4>Counselling appointment</h4>
-    <h5>` + appointment.dateOfAppointment + `</h5><br/>
-    <p>
-      Dear ` + this.username +`<br/><br/>
-      I am writing to offer you a first counselling assessment session at ` + appointment.timeOfAppointment +` on `+ appointment.dateOfAppointment +` at St.Ives House.<br/><br/>
-      <b>If you can attend</b> you don't need to contact us. We'll presume you can make your appointment.<br/><br/>
-      <b>If you can't attend please call us on 01254 226 480</b> so we can arrange another appointment on a different date. We can use your original appointment for someone else.<br/><br/>
-      <b>If you don't attend</b> we'll assume you no longer need counselling and will refer you back to GP.<br/><br/>
-      If you have any questions or concerns about counselling, please call us on 01254 226 480 and we'll be happy to discuss them with you.<br/><br/>
-      Yours sincerely<br/><br/><br/>
-      Mrs Jones <br/>
-      Counsellor
-    </p>`
+
+    return `<p><strong><span style="font-size: 20.0pt; line-height: 107%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Appointment Booked Letter</span></strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>S FREDDY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hospital_Number:2345678</p>
+<p>1000 Sylvan Avenue,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NHS_NUMBER:7864646969</p>
+<p>Timperley</p>
+<p>Wa15 6ab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>&nbsp;</p>
+<p>LETTER_REF_NO: 89713897317</p>
+<p>&nbsp;</p>
+<p>Dear&nbsp; FREDDY</p>
+<p>An appointment has been booked for you on&nbsp; 17/11/2018 09:45 a.m&nbsp; to attend the Outpatient Department.</p>
+<p>On arrival, please report to the reception desk where you will be greeted by a member of staff and directed to the required area.</p>
+<p>Should you need to change this appointment please contact us at the Appointment Management Centre on 0205645463 to make alternate arrangements.</p>
+<p>&nbsp;</p>
+<p>Yours Sincerely</p>
+<p>Inknlkvnlvn</p>
+<p>Gdhfgd Hospital</p>
+<p>Hd67n8</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Why not try our express check in facility , Visit one of our Kiosks and follow the instructions on the screen. Your Patient Number is CRN_NUMBER.</p>
+<p>&nbsp;</p>`
   }
 }

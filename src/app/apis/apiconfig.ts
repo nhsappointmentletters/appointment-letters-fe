@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8000";
+const baseUrl = "https://localhost:8000";
 export const createUserUrl = baseUrl + "/user";
 export const updateUserUrl = baseUrl + "/user/{userId}";
 export const loginUrl = baseUrl + "/authentication/generateToken";

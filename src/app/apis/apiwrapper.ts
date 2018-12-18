@@ -141,7 +141,8 @@ export class apiwrapper{
     const contentDispositionHeader: string = httpResponse.headers.get('Content-Disposition');
     const parts: string[] = contentDispositionHeader.split(';');
     const filename = parts[1].split('=')[1];
-    saveAs(httpResponse.body, filename);
+    var blob = new Blob([httpResponse.body], {type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+    saveAs(blob, filename);
   }
 
     deleteAllAppointmentsForUserId(userId){

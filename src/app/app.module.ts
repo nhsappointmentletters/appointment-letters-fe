@@ -20,7 +20,7 @@ import {MainComponent} from "./components/main/main.component";
 import {SettingsComponent} from "./components/settings/settings.component";
 import {ValidateEqualDirective} from "./directives/validate-equal.directive";
 import {AddhospitalComponent} from "./components/addhospital/addhospital.component";
-import {NotFoundComponent} from "./error-handling/not-found/not-found.component";
+import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {AuthenticationService} from "./services/authentication.service";
 import {SignInGuard} from "./routing/signin.guard";
 import {AuthenticationGuard} from "./routing/authentication.guard";

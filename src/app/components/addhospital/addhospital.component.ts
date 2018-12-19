@@ -44,3 +44,4 @@ export class AddhospitalComponent implements OnInit {
     }, () => {});
   }
 }
+
